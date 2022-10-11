@@ -14,4 +14,11 @@ after_success:
   - docker build -t hyphen/docker-complex-nginx ./nginx
   - docker build -t hyphen/docker-complex-server ./server
   - docker build -t hyphen/docker-complex-worker ./worker
-
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push hyphen/docker-complex-client
+  - docker push hyphen/docker-complex-nginx
+  - docker push hyphen/docker-complex-server
+  - docker push hyphen/docker-complex-worker
+  
