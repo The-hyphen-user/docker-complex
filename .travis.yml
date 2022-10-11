@@ -1,0 +1,17 @@
+language: generic
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t hyphen/docker-complex-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true hyphen/docker-complex-test npm run test
+
+after_success:
+  - docker build -t hyphen/docker-complex-client ./client
+  - docker build -t hyphen/docker-complex-nginx ./nginx
+  - docker build -t hyphen/docker-complex-server ./server
+  - docker build -t hyphen/docker-complex-worker ./worker
+
